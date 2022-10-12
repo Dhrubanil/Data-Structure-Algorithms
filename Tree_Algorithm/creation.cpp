@@ -84,8 +84,6 @@ pair<int,int> longestPathBwTwoNodes(node* root){  //pair of (diameter,height) fo
 int diameterOfTree(node *root){
     return longestPathBwTwoNodes(root).first;
 }
-  
-
 
 
 void reverseLevelorderTraversalUsingStack(node *root){
@@ -185,17 +183,32 @@ void postOrderTraversal(node *root){
     postOrderTraversal(root->right);
     cout<<root->data<<" ";
 }
+void deleteLeaf(node* &head){
+	if(head == NULL){
+		return;
+	}
+    if(head->left == NULL && head->right == NULL) {
+        head = NULL;
+		return;
+    }
+	
+	deleteLeaf(head->left);
+	deleteLeaf(head->right);
+}
 
 
 
 int main(){
     node *root=NULL;
     root = CreateTree(root);
+	deleteLeaf(root);
+
+
 
     // 1 3 7 -1 -1 11 -1 -1 5 17 -1 -1 -1
 
     // cout<<"Level Order Traversal :";
-    // levelorderTraversal(root);
+    levelorderTraversal(root);
     // cout<<endl;
 
     // cout<<"Reverse Level Order Traversal :";
@@ -224,5 +237,5 @@ int main(){
     // levelorderTraversal(root);
     // cout<<endl;
     // cout<< height(root);
-    cout<<diameterOfTree(root);
+    // cout<<diameterOfTree(root);
 }
