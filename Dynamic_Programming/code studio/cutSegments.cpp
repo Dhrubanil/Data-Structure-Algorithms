@@ -35,21 +35,24 @@ int cutByMem(int n, int x, int y, int z, vector<int> &dp){
 }
 
 int cutByTab(int n, int x, int y, int z){
-    vector<int> &dp(n+1,INT_MIN);
+    vector<int> dp(n+1,INT_MIN);
     dp[0] = 0;
     for(int i=1 ;i<=n ;i++){
-        // if(i-x>=0){
-        //     dp[i] = max()
-        // }
-        int xCut = dp[i-x]+1;
-        int yCut = dp[i-y]+1;
-        int zCut = dp[i-z]+1;
-        dp[i] = max(xCut,max(yCut,zCut));
+        if(i-x>=0){
+            dp[i] = max(dp[i],dp[i-x]+1);
+        }
+        if(i-y>=0){
+            dp[i] = max(dp[i],dp[i-y]+1);
+        }
+        if(i-z>=0){
+            dp[i] = max(dp[i],dp[i-z]+1);
+        }
     }
     
     return dp[n];
 
 }
+
 
 int cutSegments(int n, int x, int y, int z) {
 	// Write your code here.
