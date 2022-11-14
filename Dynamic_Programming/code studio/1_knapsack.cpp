@@ -44,7 +44,7 @@ int knapsackByMem(vector<int> weight, vector<int> value, int index, int capacity
 int knapsackByTab(vector<int> weight, vector<int> value, int n, int capacity) {
 	// Write your code here
     vector<vector<int>> dp(n, vector<int> (capacity+1,0));
-    for(int w=0; w<=capacity; w++){
+    for(int w=weight[0]; w<=capacity; w++){
         if(weight[0] <= capacity ){
             dp[0][w] = value[0];
         }else{
@@ -71,28 +71,30 @@ int knapsackByTab(vector<int> weight, vector<int> value, int n, int capacity) {
 
 int knapsackByTabSc(vector<int> weight, vector<int> value, int n, int capacity) {
 	// Write your code here
-    vector<vector<int>> dp(n, vector<int> (capacity+1,0));
-    for(int w=0; w<=capacity; w++){
+    vector<int> prev(capacity+1,0);
+    vector<int> curr(capacity+1,0);
+    for(int w=weight[0]; w<=capacity; w++){
         if(weight[0] <= capacity ){
-            dp[0][w] = value[0];
+            prev[w] = value[0];
         }else{
-            dp[0][w] = 0;
+            prev[w] = 0;
         }
     }
+
     for(int i =1 ; i<n;i++){
         for(int w= 0; w<=capacity;w++){
             int include = INT_MIN;
             if(weight[i] <= w){
-                include = value[i]+dp[i-1][w-weight[i]];
+                include = value[i]+prev[w-weight[i]];
             }
-            int exclude = 0+dp[i-1][w];
-            dp[i][w] = max(include,exclude);
+            int exclude = 0+prev[w];
+            curr[w] = max(include,exclude);
         }
+        prev=curr;
 
     }
-    return dp[n-1][capacity];
+    return prev[capacity];
 }
-
 
 
 int knapsack(vector<int> weight, vector<int> value, int n, int capacity) {
@@ -103,7 +105,7 @@ int knapsack(vector<int> weight, vector<int> value, int n, int capacity) {
     // int ans = knapsackByMem(weight,value,n-1,capacity,dp);
 
 
-    int ans = knapsackByTab(weight,value,n,capacity);
+    int ans = knapsackByTabSc(weight,value,n,capacity);
     return ans;
 }
 
