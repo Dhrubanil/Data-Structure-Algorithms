@@ -7,6 +7,9 @@
         "random": "cpp",
         "regex": "cpp",
         "scoped_allocator": "cpp",
-        "ranges": "cpp"
+        "ranges": "cpp",
+        "chrono": "cpp",
+        "limits": "cpp",
+        "valarray": "cpp"
     }
 }
